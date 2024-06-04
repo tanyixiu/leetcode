@@ -2,7 +2,7 @@ package org.example.leetcode;
 
 import org.example.tool.Util;
 
-public class LeetCode416 {
+public class LC416 {
 
 //    https://leetcode.cn/problems/partition-equal-subset-sum/description/
 
