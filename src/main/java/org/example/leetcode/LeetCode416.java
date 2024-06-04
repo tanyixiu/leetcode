@@ -28,7 +28,7 @@ public class LeetCode416 {
         boolean[] dp = new boolean[bagCapacity + 1];
         dp[0] = true;
         for (int i = 1; i <= nums.length; i++) {
-            for (int j = bagCapacity; j >= 1; j--) {
+            for (int j = bagCapacity; j >= getValues(nums, i); j--) {
                 if (getValues(nums, i) <= j) {
                     dp[j] |= dp[j - getValues(nums, i)];
                 }
