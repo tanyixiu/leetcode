@@ -17,6 +17,13 @@ public class Util {
         System.out.println("******************************************");
     }
 
+    public static void printArray(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.printf("%-3s%s", array[i], (i < array.length - 1) ? "," : "");
+        }
+        System.out.println();
+    }
+
     private static void printRowSeparator(int[][] array) {
         for (int i = 0; i <= array[0].length; i++) {
             System.out.print("----");
