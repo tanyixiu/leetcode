@@ -30,7 +30,7 @@ public class LeetCode416 {
         for (int i = 1; i <= nums.length; i++) {
             for (int j = bagCapacity; j >= 1; j--) {
                 if (getValues(nums, i) <= j) {
-                    dp[j] = (dp[j] || (dp[j - getValues(nums, i)]));
+                    dp[j] |= dp[j - getValues(nums, i)];
                 }
             }
         }
