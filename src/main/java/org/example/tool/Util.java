@@ -2,7 +2,7 @@ package org.example.tool;
 
 public class Util {
     public static void printGrid(int[][] array) {
-        System.out.println("*********************");
+        System.out.println("******************************************");
         System.out.println();
         printColumns(array);
         printRowSeparator(array);
@@ -14,7 +14,7 @@ public class Util {
             System.out.println();
         }
         System.out.println();
-        System.out.println("*********************");
+        System.out.println("******************************************");
     }
 
     private static void printRowSeparator(int[][] array) {
