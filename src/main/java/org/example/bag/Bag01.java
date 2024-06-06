@@ -4,6 +4,18 @@ import org.example.tool.Util;
 
 public class Bag01 {
 
+    private void coreThinking() {
+        /*
+         * thinking:
+         * 背包问题中：dp[i][j] 表示从i个物品中选任意个，放进容量为 j 的背包里，所得到的最大的价值
+         * 核心思路：第 i 个物品
+         *              不能选 --> 什么情况下不能选 (当前容量装不下 i 的时候)，
+         *                            如果不能选dp[i][j] = dp[i-1][j]
+         *              能选   --> 什么情况下能选（当前容量能装下 i 的时候），
+         *                            选了 i 的价值大，还是不选 i 的价值大--> 从而决定要不要选
+         */
+    }
+
     private void context() {
 //        有N件物品和一个最多能被重量为W 的背包。第i件物品的重量是weight[i]，得到的价值是value[i] 。
 //        每件物品只能用一次，求解将哪些物品装入背包里物品价值总和最大。
