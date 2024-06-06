@@ -18,53 +18,56 @@ public class LC474 {
 //    输出：2
 //    解释：最大的子集是 {"0", "1"} ，所以答案是 2 。
 
-    public int findMaxForm(String[] strs, int m, int n) {
-
+    int findMaxForm(String[] strs, int m, int n) {
         int[][] dp = new int[m + 1][n + 1];
-
-        Char01[] char01s = initChar01Array(strs);
-
         for (int i = 1; i <= strs.length; i++) {
-            Char01 str = char01s[i];
-            for (int j = m; j >= str.getNumOf0(); j--) {
-                for (int k = n; k >= str.getNumOf1(); k--) {
-                    dp[j][k] = Math.max(dp[j][k], dp[j - str.getNumOf0()][k - str.getNumOf1()] + 1);
+            int[] si = get01(strs[i - 1]);
+            int zeros = si[0];
+            int ones = si[1];
+            for (int j = m; j >= zeros; j--) {
+                for (int k = n; k >= ones; k--) {
+                    dp[j][k] = Math.max(dp[j][k], dp[j - zeros][k - ones] + 1);
                 }
             }
         }
         return dp[m][n];
     }
 
-    private static Char01[] initChar01Array(String[] strs) {
-        Char01[] char01s = new Char01[strs.length + 1];
-        char01s[0] = new Char01("");
-        for (int i = 1; i <= strs.length; i++) {
-            char01s[i] = new Char01(strs[i - 1]);
-        }
-        return char01s;
-    }
-
-    public static class Char01 {
-        private int numOf0 = 0;
-        private int numOf1 = 0;
-
-        public Char01(String item) {
-            for (Character i : item.toCharArray()) {
-                if (i == '0') {
-                    numOf0++;
-                } else {
-                    numOf1++;
-                }
+    int[] get01(String s) {
+        int zeros = 0;
+        int ones = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '0') {
+                zeros++;
+            } else {
+                ones++;
             }
         }
-
-
-        public int getNumOf0() {
-            return numOf0;
-        }
-
-        public int getNumOf1() {
-            return numOf1;
-        }
+        int[] my01 = new int[2];
+        my01[0] = zeros;
+        my01[1] = ones;
+        return my01;
     }
+
 }
+
+/*
+ * thinking:
+ *
+ * dp[i][j][k]:
+ * i -- 表示从1-i个字符串中选择任意个
+ * j -- 使得其中 0的个数不超过j
+ * k -- 使得其中 1的个数不超过k
+ * v -- 得到的最大子集个数
+ *
+ * when 不能选 i --> 选了 i 就会超 --> strs[i].zeros > j || strs[i].ones > k
+ * 则 dp[i][j][k] = dp[i-1][j][k]
+ *
+ * when 可以选 i
+ * 则 dp[i-1][j][k] 或者 dp[i][j-strs[i].zeros][k-strs[i].ones]+1
+ * 选 i 最大个数是 x
+ * 不选 i 最大个数 y
+ * 选i 和不选i都可以满足要求，那就 max(x,y+1)
+ *
+
+ */
