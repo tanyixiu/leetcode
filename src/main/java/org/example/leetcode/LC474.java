@@ -52,7 +52,7 @@ public class LC474 {
 
 /*
  * thinking:
- * 1. 找到确定的容量边界: m 和 n，有两个
+ * -. 找到确定的容量边界: m 和 n，有两个
  *
  * dp[i][j][k]:
  * i -- 表示从1-i个字符串中选择任意个
@@ -75,6 +75,6 @@ public class LC474 {
  * --> dp[i][j][0]: 0 个 1，除非全是 0，也是看情况
  *
  * 则滚动数组:
- * dp[j][k] = max(dp[j][k] , dp[j-i.zeros][k-i.ones] + 1)
- * j, k 倒序遍历
+ *      dp[j][k] = max(dp[j][k] , dp[j-i.zeros][k-i.ones] + 1)
+ * -. j, k 倒序遍历
  */
