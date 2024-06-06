@@ -1,11 +1,8 @@
 package org.example.leetcode;
 
-import org.example.tool.Util;
-
 public class LC416 {
 
 //    https://leetcode.cn/problems/partition-equal-subset-sum/description/
-
 
 //   给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
 //    示例 1：
@@ -22,68 +19,57 @@ public class LC416 {
         if (nums.length < 2) {
             return false;
         }
-        int sum = 0;
-        int max = nums[0];
-        for (int v : nums) {
-            sum += v;
-            max = v > max ? v : max;
-        }
-        if (sum % 2 == 1) {
-            return false;
-        }
-        int bagCapacity = sum / 2;
-
-        if (max > bagCapacity) {
-            return false;
-        }
-
-        boolean[] dp = new boolean[bagCapacity + 1];
-        dp[0] = true;
-        for (int i = 1; i <= nums.length; i++) {
-            for (int j = bagCapacity; j >= getValues(nums, i); j--) {
-                if (getValues(nums, i) <= j) {
-                    dp[j] |= dp[j - getValues(nums, i)];
-                }
-            }
-        }
-        return dp[bagCapacity];
-    }
-
-    public boolean canPartition_v2(int[] nums) {
-
-        if (nums.length < 2) {
-            return false;
-        }
-
-        int sum = 0;
+        int sum = 0, max = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
+            max = Math.max(max, nums[i]);
         }
-
-        if (sum % 2 != 0) {
+        if (sum % 2 != 0 || max > sum / 2) {
             return false;
         }
 
-        int[][] dp = new int[nums.length + 1][sum / 2 + 1];
-
-        dp[0][0] = 1;
+        int capacity = sum / 2;
+        boolean[] dp = new boolean[capacity + 1];
+        dp[0] = true;
         for (int i = 1; i <= nums.length; i++) {
-            for (int j = 1; j <= sum / 2; j++) {
-                dp[i][0] = 1;
-
-                if (getValues(nums, i) > j) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    dp[i][j] = dp[i - 1][j - getValues(nums, i)] == 1 || dp[i - 1][j] == 1 ? 1 : 0;
-                }
+            int num_i = nums[i - 1];
+            for (int j = capacity; j >= num_i; j--) {
+                dp[j] |= dp[j - num_i];
             }
         }
-
-        Util.printGrid(dp);
-        return dp[nums.length][sum / 2] == 1;
+        return dp[capacity];
     }
 
-    private int getValues(int[] nums, int i) {
-        return nums[i - 1];
-    }
+
+    /*
+     * thinking:
+     * 1. 拆成两个数组，输入数组的长度必须大于等于2
+     * 2. 找到确定的容量边界: sum/2
+     * 3. sum 必须是偶数，不然分不开
+     * 4. 若 max> sum/2, 则分不动，另外一边的数组必定小于容量
+     *
+     * dp[i][j]:
+     * i -- 表示从1-i个字符串中选择任意个
+     * j -- 使得其中其和恰好为j
+     * v -- 是否敲好装得下 true/false
+     *
+     * when 不能选 i (何时不能选? --> 选了 i 就超过了容量 --> nums[i]>j)
+     * 则 dp[i][j] = dp[i-1][j]
+     *
+     * when 可以选 i
+     * 方案1: 不选 i,则 --> dp[i-1][j]
+     * 方案2: 要选 i,则 --> dp[i-1][j-nums[i]]
+     * 只要方案 1 或者方案 2 其中一个恰好装得下就行
+     * 则: dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i]]
+     *
+     * 初始化 dp[0][j]/d[i][0]:
+     * --> dp[0][j]: 一个数都不选，使得和敲好为j --> dp[0][0] = true
+     * --> dp[i][0]: 选任意个，除非每个数都为0，但题目给出是正整数 --> dp[0][0] = true
+     *
+     * 则滚动数组:
+     * dp[j] |= dp[i-1][j-nums[i]]
+     * j 倒序遍历
+     */
+
+
 }
