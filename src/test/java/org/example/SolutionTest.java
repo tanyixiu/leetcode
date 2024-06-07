@@ -1,14 +1,15 @@
 package org.example;
 
 
-import java.util.Deque;
-import java.util.concurrent.DelayQueue;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class SolutionTest {
 
     @Test
     void name() {
-        DelayQueue
+        Map<String,String> s = new HashMap<>();
+        s.put("aa","b");
     }
 }
