@@ -27,4 +27,12 @@ class LC128Test {
         int max = lc.longestConsecutive(nums);
         Assertions.assertEquals(3, max);
     }
+
+    @Test
+    void case4() {
+        LC128 lc = new LC128();
+        int[] nums = {4, 0, -4, -2, 2, 5, 2, 0, -8, -8, -8, -8, -1, 7, 4, 5, 5, -4, 6, 6, -3};
+        int max = lc.longestConsecutive(nums);
+        Assertions.assertEquals(5, max);
+    }
 }

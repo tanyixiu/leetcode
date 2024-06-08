@@ -1,28 +1,37 @@
 package org.example.top100;
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LC128 {
     public int longestConsecutive(int[] nums) {
         if (nums.length <= 1) {
             return nums.length;
         }
-        Arrays.sort(nums);
-        int max = 1;
+
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            set.add(nums[i]);
+        }
+
         int len = 1;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == nums[i - 1]) {
+        int maxLen = 1;
+
+        for (int num : set) {
+            if (set.contains(num - 1)) {
                 continue;
             }
-            if (nums[i] == nums[i - 1] + 1) {
-                len++;
-                if (len >= max) {
-                    max = len;
+
+            for (int i = 1; i <= set.size(); i++) {
+                if (set.contains(num + i)) {
+                    len++;
+                } else {
+                    maxLen = Math.max(len, maxLen);
+                    len = 1;
+                    break;
                 }
-            } else {
-                len = 1;
             }
         }
-        return max;
+        return maxLen;
     }
 }
