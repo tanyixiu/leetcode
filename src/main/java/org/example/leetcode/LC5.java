@@ -8,10 +8,10 @@ public class LC5 {
             char x = s.charAt(i);
             int j = s.length() - 1;
             distance = j + 1 - i;
-            while (j >= i) {
-                if (x == s.charAt(j) && isLongerThanMax(maxMatchStr, i, j) && isPalindrome(s.substring(i, j + 1))) {
+            while (j >= i && isLongerThanMax(maxMatchStr, i, j)) {
+                if (x == s.charAt(j) && isPalindrome(s.substring(i, j + 1))) {
                     maxMatchStr = s.substring(i, j + 1);
-                    j = i;
+                    break;
                 } else {
                     j--;
                 }
